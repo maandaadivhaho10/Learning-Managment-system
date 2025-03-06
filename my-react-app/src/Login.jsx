@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./styles.css"; 
+import axios from "axios"; // Import axios for API calls
+import "./styles.css";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -15,16 +16,16 @@ function Login() {
     setError("");
 
     try {
-      // Simulating login (replace with API call)
-      if (email === "student@example.com" && password === "password123") {
-        setLoading(false);
-        navigate("/dashboard"); // Redirect to Dashboard
-      } else {
-        throw new Error("Invalid email or password");
-      }
-    } catch (error) {
+      const response = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+
+      // Save token to localStorage
+      localStorage.setItem("token", response.data.token);
+
       setLoading(false);
-      setError(error.message);
+      navigate("/dashboard"); // Redirect after successful login
+    } catch (err) {
+      setLoading(false);
+      setError(err.response?.data?.error || "Login failed. Please try again.");
     }
   };
 

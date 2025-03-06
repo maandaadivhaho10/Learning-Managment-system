@@ -50,7 +50,7 @@ function Signup() {
     <div className="signup-container">
       <div className="signup-box">
         <h2>Create an Account</h2>
-        <p>Join the Learning Management System today</p>
+        <p>Join EduMaster today</p>
 
         {error && <p className="error-message">{error}</p>}
 

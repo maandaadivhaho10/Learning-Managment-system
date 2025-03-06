@@ -13,15 +13,25 @@ router.post('/register', async (req, res) => {
   }
 });
 
-router.post('/login', async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log("Logging in with email:", email);
+
+    // Find user by email
     const user = await User.findByEmail(email);
-    if (!user || !await bcrypt.compare(password, user.password)) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+    if (!user) {
+      return res.status(401).json({ message: "Invalid credentials" });
     }
-    const token = jwt.sign({ id: user.id, role: user.role }, 'your_jwt_secret');
-    res.json({ token });
+
+    // Direct password comparison (⚠️ Not recommended for production)
+    if (password !== user.password) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    // Respond with success message and user details
+    res.json({ message: "Login successful", user: { id: user.id, email: user.email, role: user.role } });
+
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
