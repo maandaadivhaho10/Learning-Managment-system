@@ -8,6 +8,8 @@ import Course from './Course';
 import Quizzes from './Quizzes';
 import Quiz from './Quiz';
 import Signup from "./Signup";
+import CourseDetail from "./CourseDetail";
+  <Route path="/courses/:courseId" element={<CourseDetail />} />
 import './styles.css'; // Import global styles
 
 function App() {
@@ -24,6 +26,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/courses" element={<Course />} /> {/* Ensure this is here */}
           <Route path="/quizzes" element={<Quizzes />} />
+          <Route path="/courses/:courseId" element={<CourseDetail />} />
           <Route path="/quiz/:id" element={<Quiz />} />
         </Routes>
       </div>
