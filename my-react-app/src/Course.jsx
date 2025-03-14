@@ -5,29 +5,30 @@ import "./styles.css";
 function Course() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error2, setError2] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    let isMounted = true; // Track component mount status
+    const controller = new AbortController();
+    const signal = controller.signal;
 
     const fetchCourses = async () => {
       try {
-        // Simulated data fetch
-        const mockCourses = [
-          { id: "react", title: "React Basics", description: "Learn the fundamentals of React.js." },
-          { id: "javascript", title: "JavaScript Advanced", description: "Master advanced JavaScript concepts." },
-          { id: "python", title: "Python for Beginners", description: "Introduction to Python programming." }
-        ];
-
-        // Only update state if the component is still mounted
-        if (isMounted) {
-          setCourses(mockCourses);
-          setLoading(false);
-        }
+        // Simulated API request with a delay
+        setTimeout(() => {
+          const mockCourses = [
+            { id: "react", title: "React Basics", description: "Learn the fundamentals of React.js." },
+            { id: "javascript", title: "JavaScript Advanced", description: "Master advanced JavaScript concepts." },
+            { id: "python", title: "Python for Beginners", description: "Introduction to Python programming." }
+          ];
+          if (!signal.aborted) {
+            setCourses(mockCourses);
+            setLoading(false);
+          }
+        }, 1000); // Simulate network delay
       } catch (err) {
-        console.error("Fetch error:", err.message);
-        if (isMounted) {
-          setError2("Failed to load courses.");
+        if (!signal.aborted) {
+          console.error("Fetch error:", err.message);
+          setError("Failed to load courses. Please try again.");
           setLoading(false);
         }
       }
@@ -35,14 +36,11 @@ function Course() {
 
     fetchCourses();
 
-    // Cleanup function to avoid state updates on unmounted component
-    return () => {
-      isMounted = false;
-    };
+    return () => controller.abort(); // Cleanup on unmount
   }, []);
 
   if (loading) return <p className="loading">Loading courses...</p>;
-  if (error2) return <p className="error-message">{error2}</p>;
+  if (error) return <p className="error-message">{error}</p>;
 
   return (
     <div className="course-container">

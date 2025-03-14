@@ -1,79 +1,92 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-const CourseDetail = ({ courseId }) => {
+const CourseDetail = () => {
+  const { courseId } = useParams();
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchTopics = async () => {
-      console.log("API Key:", import.meta.env.VITE_OPENAI_API_KEY);
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
-      if (!import.meta.env.VITE_OPENAI_API_KEY) {
+      if (!apiKey) {
         setError("API key is missing. Please check your .env file.");
         setLoading(false);
         return;
       }
 
-      try {
-        const response = await fetch("https://api.openai.com/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
-          },
-          body: JSON.stringify({
-            model: "gpt-3.5-turbo", // Change if needed
-            messages: [
-              { role: "system", content: "You are an expert course instructor." },
-              { role: "user", content: `List the main topics covered in a "${courseId}" course.` }
-            ],
-            max_tokens: 100
-          }),
-        });
+      if (!courseId) {
+        setError("Invalid course ID.");
+        setLoading(false);
+        return;
+      }
 
-        console.log("Raw Response:", response); // Debug response
+      try {
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro-002:generateContent?key=${apiKey}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: `List the main topics covered in a "${courseId}" course.` }] }],
+            }),
+          }
+        );
 
         if (!response.ok) {
           const errorData = await response.json();
-          console.error("OpenAI API Error:", errorData);
-          throw new Error(`OpenAI API Error: ${response.status} ${response.statusText} - ${JSON.stringify(errorData)}`);
+          throw new Error(`Gemini API Error: ${errorData?.error?.message || response.statusText}`);
         }
 
         const data = await response.json();
-        console.log("OpenAI Response Data:", data);
+        console.log("Gemini API Response:", data);
 
-        if (!data.choices || data.choices.length === 0) {
-          throw new Error("Unexpected API response structure.");
-        }
-
-        const topicsList = data.choices[0].message.content
+        // Extract and clean topics from response
+        const topicsText = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
+        const topicsList = topicsText
           .split("\n")
-          .filter(topic => topic.trim() !== "");
+          .map(topic => topic.replace(/^\d+\.\s*/, "").trim()) // Remove numbering if present
+          .filter(topic => topic !== ""); // Remove empty lines
 
         setTopics(topicsList);
       } catch (err) {
         console.error("API Error:", err);
-        setError(`Failed to load topics. Error: ${err.message}`);
+        setError(`Failed to load topics. ${err.message}`);
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
 
     fetchTopics();
   }, [courseId]);
 
-  if (loading) return <p>Loading topics...</p>;
-  if (error) return <p className="error">{error}</p>;
+  if (!courseId) {
+    return <p className="error-message">Invalid course ID. Check again.</p>;
+  }
 
   return (
-    <div>
-      <h2>Topics for {courseId}</h2>
-      <ul>
-        {topics.map((topic, index) => (
-          <li key={index}>{topic}</li>
-        ))}
-      </ul>
+    <div className="container">
+      <h2 className="course-title">
+        Topics for <span className="highlight">{courseId}</span>
+      </h2>
+
+      {loading && <p className="loading-text">Loading topics...</p>}
+
+      {error && <p className="error-message">{error}</p>}
+
+      {!loading && !error && topics.length > 0 ? (
+        <ul className="topic-list">
+          {topics.map((topic, index) => (
+            <li key={index} className="topic-item">
+              {topic}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        !loading && !error && <p className="no-topics">No topics found.</p>
+      )}
     </div>
   );
 };

@@ -711,3 +711,83 @@ body {
       text-align: left;
     }
   }    
+  /* General Page Styles */
+.container {
+  max-width: 48rem; /* Equivalent to max-w-3xl */
+  margin: 2.5rem auto; /* Centering with top margin */
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb; /* Light gray border */
+}
+
+/* Heading Style */
+.course-title {
+  font-size: 1.875rem; /* Equivalent to text-3xl */
+  font-weight: 700;
+  color: #1e3a8a; /* Dark blue */
+  text-align: center;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 1rem;
+}
+
+/* Loading Animation */
+.loading-text {
+  color: #4b5563; /* Gray */
+  text-align: center;
+  font-size: 1rem;
+  animation: pulse 1.5s infinite;
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+/* Error Message */
+.error-message {
+  color: #b91c1c; /* Red */
+  background: #fee2e2; /* Light red */
+  padding: 1rem;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 500;
+  margin-top: 1rem;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Topic List */
+.topic-list {
+  margin-top: 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.topic-item {
+  background: #dbeafe; /* Light blue */
+  color: #1e40af; /* Darker blue */
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  border: 1px solid #93c5fd; /* Light blue border */
+}
+
+/* No Topics Found */
+.no-topics {
+  color: #6b7280; /* Gray */
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
