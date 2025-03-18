@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './Navbar';
 import Home from './Home';
 import Login from './Login';
@@ -9,12 +9,9 @@ import Quizzes from './Quizzes';
 import Quiz from './Quiz';
 import Signup from "./Signup";
 import CourseDetail from "./CourseDetail";
-  <Route path="/courses/:courseId" element={<CourseDetail />} />
 import './styles.css'; // Import global styles
 
 function App() {
-   // Check if we're on the dashboard route
-   
   return (
     <Router>
       <Navbar />
@@ -24,7 +21,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/courses" element={<Course />} /> {/* Ensure this is here */}
+          <Route path="/courses" element={<Course />} /> 
           <Route path="/quizzes" element={<Quizzes />} />
           <Route path="/courses/:courseId" element={<CourseDetail />} />
           <Route path="/quiz/:id" element={<Quiz />} />
