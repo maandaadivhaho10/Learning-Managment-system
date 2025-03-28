@@ -791,3 +791,22 @@ body {
   font-size: 1rem;
   margin-top: 1rem;
 }
+.back-button, .go-to-courses {
+  padding: 10px 20px;
+  margin-top: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.back-button:hover, .go-to-courses:hover {
+  background-color: #0056b3;
+}
+.back-icon {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+  z-index: 100; /* Ensures it appears on top */
+}

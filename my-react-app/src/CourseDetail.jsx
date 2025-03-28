@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa"; // Import the left arrow icon from react-icons
+import "./CourseDetail.css"; // Ensure you have a separate CSS file for styling
 
 const CourseDetail = () => {
   const { courseId } = useParams();
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     const fetchTopics = async () => {
@@ -47,8 +50,8 @@ const CourseDetail = () => {
         const topicsText = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
         const topicsList = topicsText
           .split("\n")
-          .map(topic => topic.replace(/^\d+\.\s*/, "").trim()) // Remove numbering if present
-          .filter(topic => topic !== ""); // Remove empty lines
+          .map((topic) => topic.replace(/^\d+\.\s*/, "").trim()) // Remove numbering if present
+          .filter((topic) => topic !== ""); // Remove empty lines
 
         setTopics(topicsList);
       } catch (err) {
@@ -67,9 +70,14 @@ const CourseDetail = () => {
   }
 
   return (
-    <div className="container">
+    <div className="course-detail-container">
+      {/* Back arrow icon */}
+      <div className="back-icon" onClick={() => navigate(-1)}>
+        <FaArrowLeft size={30} />
+      </div>
+
       <h2 className="course-title">
-        Topics for <span className="highlight">{courseId}</span>
+        <span className="highlight">{courseId}</span> - Topics
       </h2>
 
       {loading && <p className="loading-text">Loading topics...</p>}
@@ -87,6 +95,11 @@ const CourseDetail = () => {
       ) : (
         !loading && !error && <p className="no-topics">No topics found.</p>
       )}
+
+      {/* Back button to go back to the previous page */}
+      <button onClick={() => navigate(-1)} className="back-button">
+        Go Back
+      </button>
     </div>
   );
 };
