@@ -1,48 +1,73 @@
 .chatboard {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 300px;
-    height: 400px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-  
-  .chat-messages {
-    flex: 1;
-    padding: 10px;
-    overflow-y: auto;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .chat-message {
-    margin-bottom: 8px;
-  }
-  
-  .chat-input {
-    display: flex;
-    padding: 10px;
-    border-top: 1px solid #ccc;
-  }
-  
-  .chat-input input {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .chat-input button {
-    margin-left: 10px;
-    padding: 8px;
-    background: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  height: 400px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  border-bottom: 1px solid #ccc;
+}
+
+.chat-message {
+  margin-bottom: 8px;
+  padding: 10px; /* Increased padding for larger text */
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+}
+
+.chat-message.bot {
+  background-color: #e7f7f5;
+  color: #333;
+  font-size: 1rem; /* Increased font size for bot */
+  font-weight: 400;
+}
+
+.chat-message.you {
+  background-color: #f1f0f0;
+  color: #333;
+  font-size: 1.1rem; /* Increased font size for user */
+  font-weight: 500;
+}
+
+.chat-input {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 10px; /* Increased padding for better input appearance */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem; /* Increased font size for input text */
+}
+
+.chat-input button {
+  margin-left: 10px;
+  padding: 10px; /* Increased button size */
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.chatboard-heading {
+  text-align: center;
+  font-size: 2.5rem; /* Increased font size for heading */
+  color: #4CAF50;
+  margin-bottom: 20px;
+  font-family: 'Roboto', sans-serif;
+}
