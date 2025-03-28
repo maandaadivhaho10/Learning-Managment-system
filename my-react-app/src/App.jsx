@@ -9,6 +9,7 @@ import Quizzes from './Quizzes';
 import Quiz from './Quiz';
 import Signup from "./Signup";
 import CourseDetail from "./CourseDetail";
+import Chatboard from "./Chatboard"; 
 import './styles.css'; // Import global styles
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/courses" element={<Course />} /> 
@@ -27,6 +29,7 @@ function App() {
           <Route path="/quiz/:id" element={<Quiz />} />
         </Routes>
       </div>
+      <Chatboard /> 
     </Router>
   );
 }
