@@ -9,11 +9,6 @@ function Home() {
       <h1>Welcome to the EduMaster</h1>
       <p>Your gateway to interactive learning and self-improvement.</p>
 
-      <div className="home-buttons">
-        <Link to="/login" className="btn">Login</Link>
-        
-      </div>
-
       <div className="home-image">
         <img src={learningImage}alt="Learning" />
       </div>

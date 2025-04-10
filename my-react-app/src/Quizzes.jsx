@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./styles.css";
+import "./Quizzes.css";
 
 const quizzes = [
   { id: 1, title: "React Basics" },
@@ -10,17 +10,17 @@ const quizzes = [
 
 const Quizzes = () => {
   return (
-    <div className="container">
+    <div className="quizzes-container">
       <h2>Available Quizzes</h2>
-      <ul className="quiz-list">
+      <div className="quiz-list">
         {quizzes.map((quiz) => (
-          <li key={quiz.id}>
-            <Link to={`/quiz/${quiz.id}`} className="btn">
+          <div key={quiz.id} className="quiz-card">
+            <Link to={`/quiz/${quiz.id}`} className="quiz-link">
               {quiz.title}
             </Link>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

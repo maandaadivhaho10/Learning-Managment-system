@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import "./styles.css";
+import "./Quiz.css";
 
 const quizData = {
   1: {
@@ -39,24 +39,34 @@ const Quiz = () => {
   };
 
   return (
-    <div className="container">
+    <div className="quiz-container">
       <h2>{quiz?.title}</h2>
       {quiz ? (
         <>
           {quiz.questions.map((q, index) => (
             <div key={index} className="quiz-question">
               <p>{q.question}</p>
-              {q.options.map((option) => (
-                <button key={option} className="btn" onClick={() => handleAnswer(index, option)}>
-                  {option}
-                </button>
-              ))}
+              <div className="quiz-options">
+                {q.options.map((option) => (
+                  <button 
+                    key={option} 
+                    className={`quiz-btn ${answers[index] === option ? 'selected' : ''}`}
+                    onClick={() => handleAnswer(index, option)}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
             </div>
           ))}
-          <button className="btn" onClick={handleSubmit}>
-            Submit
+          <button className="submit-btn" onClick={handleSubmit}>
+            Submit Quiz
           </button>
-          {score !== null && <h3>Your Score: {score}/{quiz.questions.length}</h3>}
+          {score !== null && (
+            <div className="score-display">
+              Your Score: {score}/{quiz.questions.length}
+            </div>
+          )}
         </>
       ) : (
         <p>Quiz not found.</p>

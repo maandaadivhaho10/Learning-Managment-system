@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Home from './Home';
 import Login from './Login';
@@ -10,26 +10,37 @@ import Quiz from './Quiz';
 import Signup from "./Signup";
 import CourseDetail from "./CourseDetail";
 import Chatboard from "./Chatboard"; 
-import './styles.css'; // Import global styles
+import './styles.css';
 
-function App() {
+function AppWrapper() {
+  const location = useLocation();
+  const showNavbar = ['/login', '/signup', '/'].includes(location.pathname);
+
   return (
-    <Router>
-      <Navbar />
+    <>
+      {showNavbar && <Navbar />}
       <div className="container">
+      
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/courses" element={<Course />} /> 
+          <Route path="/dashboard" element={<Dashboard />} /> 
           <Route path="/quizzes" element={<Quizzes />} />
           <Route path="/courses/:courseId" element={<CourseDetail />} />
           <Route path="/quiz/:id" element={<Quiz />} />
         </Routes>
       </div>
-      <Chatboard /> 
+      <Chatboard />
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppWrapper />
     </Router>
   );
 }

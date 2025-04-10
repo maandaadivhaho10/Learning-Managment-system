@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./newChatBoard.css";
+import "./chatboardSidebar.css";
 
 function Chatboard() {
   const [messages, setMessages] = useState([]);
@@ -58,11 +58,19 @@ function Chatboard() {
       <h3 className="chatboard-heading">Chat with Adi</h3>
       <div className="chat-messages">
         {messages.map((msg, index) => (
-          <div key={index} className={`chat-message ${msg.sender.toLowerCase()}`}>
+          <div 
+            key={index} 
+            className={`chat-message ${msg.sender.toLowerCase()}`}
+            data-time={new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          >
             <strong>{msg.sender}:</strong> {msg.text}
           </div>
         ))}
-        {loading && <div className="chat-message bot">Bot is typing...</div>}
+        {loading && (
+          <div className="chat-message bot" data-typing="true">
+            <strong>Bot:</strong> Thinking
+          </div>
+        )}
       </div>
       <div className="chat-input">
         <input
