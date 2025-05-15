@@ -42,7 +42,7 @@ function Chatboard() {
     } catch (error) {
       console.error("Error fetching AI response:", error);
       const errorMessage = {
-        text: "Sorry, there was an issue getting the response. Please try again later.",
+        text: "You ran out of free Gemini Credits.",
         sender: "Bot",
       };
       setMessages((prev) => [...prev, errorMessage]);
